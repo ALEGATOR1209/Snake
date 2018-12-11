@@ -83,7 +83,7 @@ const badFood = () => {
 
 const drawFood = () => {
   process.stdout.write(`\x1b[${food.y};${food.x}H`);
-  process.stdout.write('*');
+  process.stdout.write('\x1b[31m*\x1b[0m');
 };
 
 /***********************/

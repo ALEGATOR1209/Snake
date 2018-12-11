@@ -85,15 +85,15 @@ class Snake {
         process.stdout.write(`\x1b[${current.y};${current.x}H`);
 
         if (prev.x === next.x)
-          process.stdout.write('║');
+          process.stdout.write('\x1b[32m║\x1b[0m');
         else
-          process.stdout.write('=');
+          process.stdout.write('\x1b[32m=\x1b[0m');
       }
     }
     const arrow = DIRECTIONS[this.direction];
     const head = this.positions[0];
     process.stdout.write(`\x1b[${head.y};${head.x}H`);
-    process.stdout.write(arrow);
+    process.stdout.write(`\x1b[32m${arrow}\x1b[0m`);
     return this;
   }
 }

@@ -29,7 +29,7 @@ class Brick {
   }
   toString() {
     this.positions.forEach(pos => {
-      process.stdout.write(`\x1b[${pos.y};${pos.x}H=`);
+      process.stdout.write(`\x1b[${pos.y};${pos.x}H\x1b[37m=\x1b[0m`);
     });
     return this;
   }
