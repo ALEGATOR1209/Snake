@@ -1,6 +1,6 @@
 'use strict';
 
-class Field {
+module.exports = class Field {
   constructor(heigth, width, header = '', score = 0) {
     this.heigth = heigth;
     this.width = width;
@@ -38,4 +38,4 @@ class Field {
   }
 }
 
-if (typeof exports !== 'undefined') exports.Field = Field;
+//if (typeof module.exports !== 'undefined') module.exports = Field;

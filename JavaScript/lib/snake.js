@@ -18,7 +18,7 @@ const DIRECTIONS = {
   right: '⇒',
 };
 
-class Snake {
+module.exports = class Snake {
   constructor(snake = DEFAULT_SNAKE) {
     const { length, direction, positions } = snake;
     this.length = length;
@@ -97,5 +97,3 @@ class Snake {
     return this;
   }
 }
-
-if (typeof exports !== 'undefined') exports.Snake = Snake;

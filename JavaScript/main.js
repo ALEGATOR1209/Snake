@@ -2,9 +2,9 @@
 /************************************/
 /*---->IMPORTS AND KEYPRES INIT<----*/
 /************************************/
-const snake = require('./lib/snake.js');
-const field = require('./lib/field.js');
-const brick = require('./lib/brick.js');
+const Snake = require('./lib/snake.js');
+const Field = require('./lib/field.js');
+const Brick = require('./lib/brick.js');
 const readline = require('readline');
 readline.emitKeypressEvents(process.stdin);
 process.stdin.setRawMode(true);
@@ -16,9 +16,9 @@ console.clear();
 const HEIGTH = 20;
 const WIDTH = 50;
 const HEADER = 'Best game I ever played. \x1b[32m(c) ALEGATOR1209\x1b[0m';
-const Field = new field.Field(HEIGTH, WIDTH, HEADER);
-const BrickMaster = new brick.Brick(WIDTH - 2, HEIGTH - 1);
-const python = new snake.Snake();
+const field = new Field(HEIGTH, WIDTH, HEADER);
+const brickMaster = new Brick(WIDTH - 2, HEIGTH - 1);
+const python = new Snake();
 /*******************/
 /*>KEYPRESS LAUNCH<*/
 /*******************/
@@ -41,12 +41,12 @@ process.stdin.on('keypress', (str, key) => {
 const finish = game => {
   clearInterval(game);
   game = null;
-  const loserText = 'YOU LOST!';
-  const score = Field.getScore();
+  const loserText = ' '.repeat(10) + 'YOU LOST!';
+  const score = field.getScore();
 
-  const finishField = new field.Field(HEIGTH, WIDTH, loserText, score);
+  const finishField = new Field(HEIGTH, WIDTH, loserText, score);
   python.toString();
-  BrickMaster.toString();
+  brickMaster.toString();
   finishField.toString();
   console.log('\x1B[?25h\n');
   process.exit(0);
@@ -54,7 +54,7 @@ const finish = game => {
 
 const generateFood = (minX, maxX, minY, maxY) => {
   const snake = python.getAllPositions();
-  const bricks = BrickMaster.getAllPositions();
+  const bricks = brickMaster.getAllPositions();
   const wrongPositions = [...snake, ...bricks];
   const goodPositions = [];
 
@@ -74,7 +74,7 @@ const getFood = () => generateFood(2, WIDTH, 3, HEIGTH - 1);
 let food = getFood();
 
 const badFood = () => {
-  const wrongPositions = BrickMaster.getAllPositions();
+  const wrongPositions = brickMaster.getAllPositions();
   for (const pos of wrongPositions)
     if (food.x === pos.x && food.y === pos.y)
       return true;
@@ -83,7 +83,7 @@ const badFood = () => {
 
 const drawFood = () => {
   process.stdout.write(`\x1b[${food.y};${food.x}H`);
-  process.stdout.write('\x1b[31m*\x1b[0m');
+  process.stdout.write('🍎');
 };
 
 /***********************/
@@ -94,7 +94,7 @@ const game = setInterval(() => {
     .move()
     .toString();
   const head = python.getHeadPosition();
-  const bricks = BrickMaster.getAllPositions();
+  const bricks = brickMaster.getAllPositions();
   if (head.x === 1 || head.x === WIDTH)
     finish(game);
   if (head.y === 1 || head.y === HEIGTH)
@@ -107,16 +107,16 @@ const game = setInterval(() => {
     food = getFood();
   if (head.y === food.y && head.x === food.x) {
     food = getFood();
-    BrickMaster.addBrick(python.getAllPositions());
+    brickMaster.addBrick(python.getAllPositions());
     python.toDefaults();
-    Field.scoreAdd(1);
+    field.scoreAdd(1);
   }
   drawFood();
-  BrickMaster
+  brickMaster
     .toString()
     .moveEmAll();
-  if (BrickMaster.isLines())
-    Field.scoreAdd(10);
-  Field.toString();
+  if (brickMaster.isLines())
+    field.scoreAdd(10);
+  field.toString();
   console.log('\x1B[?25l');
 }, 200);

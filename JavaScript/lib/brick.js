@@ -35,7 +35,7 @@ class Brick {
   }
 }
 
-class BrickMaster {
+module.exports = class BrickMaster {
   constructor(width, heigth, bricks = []) {
     this.width = width;
     this.heigth = heigth;
@@ -130,5 +130,3 @@ class BrickMaster {
     return false;
   }
 }
-
-if (typeof exports !== 'undefined') exports.Brick = BrickMaster;
