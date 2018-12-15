@@ -105,7 +105,8 @@ const game = setInterval(() => {
   });
   if (badFood())
     food = getFood();
-  if (head.y === food.y && head.x === food.x) {
+  if (head.y === food.y && 
+    (head.x === food.x || head.x === food.x + 1)) {
     food = getFood();
     brickMaster.addBrick(python.getAllPositions());
     python.toDefaults();
